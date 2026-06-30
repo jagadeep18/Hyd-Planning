@@ -3,557 +3,954 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hyderabad Explorer — Pick Your Plan</title>
+<title>Hyderabad Explorer — Plans from Hitech City</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --pearl:#f6efe2;
-  --pearl-dim:#ede2cd;
-  --teal:#0f4c4a;
-  --teal-deep:#0a3432;
-  --gold:#c79a45;
-  --gold-bright:#e0b563;
-  --terracotta:#b5512f;
-  --ink:#1c2421;
-  --line: rgba(199,154,69,0.35);
-  --shadow: 0 20px 50px -20px rgba(10,52,50,0.45);
-}
-*{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'Manrope', sans-serif;
-  background:var(--pearl);
-  color:var(--ink);
-  overflow-x:hidden;
-}
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
-}
-h1,h2,h3,.display{ font-family:'Cormorant Garamond', serif; }
-a{color:inherit;}
-img{max-width:100%; display:block;}
+  :root{
+    --night:#0B1F3A;
+    --night-2:#13294F;
+    --pearl:#F4ECD8;
+    --pearl-2:#FBF6EA;
+    --saffron:#E8A33D;
+    --terracotta:#C1432D;
+    --teal:#2D7D6E;
+    --ink:#1A1A1A;
+    --white:#FFFFFF;
+    --shadow: 0 20px 50px rgba(11,31,58,0.25);
+    --radius-arch: 200px 200px 16px 16px;
+    --ease: cubic-bezier(.22,.85,.32,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:var(--pearl);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Marcellus',serif; font-weight:400;}
+  ::selection{background:var(--saffron); color:var(--night);}
 
-/* ---------- Jali lattice pattern (signature motif) ---------- */
-.jali-bg{
-  background-image:
-    radial-gradient(circle at 12.5% 12.5%, transparent 5px, var(--gold) 5.5px, var(--gold) 6px, transparent 6.5px),
-    radial-gradient(circle at 37.5% 12.5%, transparent 5px, var(--gold) 5.5px, var(--gold) 6px, transparent 6.5px),
-    radial-gradient(circle at 62.5% 12.5%, transparent 5px, var(--gold) 5.5px, var(--gold) 6px, transparent 6.5px),
-    radial-gradient(circle at 87.5% 12.5%, transparent 5px, var(--gold) 5.5px, var(--gold) 6px, transparent 6.5px);
-  background-size:80px 40px;
-  opacity:0.12;
-}
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--pearl);}
+  ::-webkit-scrollbar-thumb{background:var(--teal); border-radius:10px;}
 
-/* ---------- Top bar ---------- */
-.topbar{
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:18px clamp(20px,5vw,56px);
-  background:rgba(246,239,226,0.78);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
-  transition:padding .3s ease;
-}
-.brand{ display:flex; align-items:center; gap:10px; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.4rem; letter-spacing:0.5px; color:var(--teal-deep);}
-.brand .mark{ width:30px; height:30px; flex-shrink:0;}
-.topnav{ display:flex; gap:28px; font-size:0.92rem; font-weight:600; letter-spacing:0.3px;}
-.topnav a{ text-decoration:none; color:var(--teal-deep); opacity:0.75; position:relative; padding-bottom:4px;}
-.topnav a:hover{ opacity:1;}
-.topnav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--gold);transition:width .25s ease;}
-.topnav a:hover::after{width:100%;}
-@media (max-width:760px){ .topnav{display:none;} }
+  a{text-decoration:none; color:inherit;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
 
-/* ---------- Hero ---------- */
-.hero{
-  position:relative;
-  min-height:100vh;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center;
-  padding:140px 20px 80px;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(199,154,69,0.18), transparent 60%),
-    linear-gradient(180deg, var(--teal-deep) 0%, var(--teal) 55%, #135a57 100%);
-  color:var(--pearl);
-  overflow:hidden;
-}
-.hero .jali-bg{ position:absolute; inset:0; opacity:0.07; filter:invert(1);}
-.hero-eyebrow{
-  display:inline-flex; align-items:center; gap:10px;
-  font-size:0.78rem; letter-spacing:3px; text-transform:uppercase; font-weight:700;
-  color:var(--gold-bright); margin-bottom:26px; opacity:0;
-  animation: fadeUp 0.9s ease 0.2s forwards;
-}
-.hero-eyebrow .rule{width:34px;height:1px;background:var(--gold-bright);}
-.hero h1{
-  font-size:clamp(2.6rem, 7vw, 5.4rem);
-  line-height:1.02; font-weight:600;
-  max-width:14ch;
-  opacity:0; animation: fadeUp 1s ease 0.4s forwards;
-}
-.hero h1 em{ font-style:italic; color:var(--gold-bright); font-weight:600;}
-.hero p.sub{
-  margin-top:24px; font-size:clamp(1rem,2vw,1.2rem); max-width:540px;
-  color:rgba(246,239,226,0.82); font-weight:400; line-height:1.6;
-  opacity:0; animation: fadeUp 1s ease 0.6s forwards;
-}
-.hero-cta{
-  margin-top:42px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
-  opacity:0; animation: fadeUp 1s ease 0.8s forwards;
-}
-.btn{
-  font-family:'Manrope',sans-serif; font-weight:700; font-size:0.95rem;
-  padding:15px 32px; border-radius:2px; border:1px solid transparent;
-  cursor:pointer; letter-spacing:0.3px; text-decoration:none;
-  display:inline-flex; align-items:center; gap:8px;
-  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-}
-.btn-gold{ background:var(--gold); color:var(--teal-deep);}
-.btn-gold:hover{ background:var(--gold-bright); transform:translateY(-3px); box-shadow:0 14px 26px -10px rgba(199,154,69,0.6);}
-.btn-ghost{ border-color:rgba(246,239,226,0.4); color:var(--pearl);}
-.btn-ghost:hover{ border-color:var(--gold-bright); color:var(--gold-bright); transform:translateY(-3px);}
+  /* ===== NAV ===== */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 5%;
+    background:rgba(11,31,58,0.55);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(232,163,61,0.18);
+    transition:padding .3s var(--ease);
+  }
+  .nav.scrolled{padding:10px 5%; background:rgba(11,31,58,0.85);}
+  .nav-logo{display:flex; align-items:center; gap:10px; color:var(--pearl);}
+  .nav-logo .arch-icon{
+    width:30px;height:34px;
+    background:var(--saffron);
+    border-radius:50px 50px 4px 4px;
+    box-shadow:inset 0 0 0 3px var(--night);
+  }
+  .nav-logo span{font-family:'Marcellus',serif; font-size:1.25rem; letter-spacing:.5px;}
+  .nav-links{display:flex; gap:30px; align-items:center;}
+  .nav-links a{color:var(--pearl); font-size:.92rem; font-weight:500; position:relative; padding:4px 0;}
+  .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--saffron);transition:width .3s var(--ease);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--saffron); color:var(--night)!important; padding:9px 20px; border-radius:30px;
+    font-weight:700; font-size:.85rem;
+  }
+  .nav-toggle{display:none; flex-direction:column; gap:5px; background:none;}
+  .nav-toggle span{width:24px;height:2px;background:var(--pearl);}
 
-.skyline{
-  position:absolute; bottom:0; left:0; width:100%; height:140px; opacity:0.5;
-}
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(232,163,61,0.18), transparent 45%),
+      radial-gradient(circle at 80% 30%, rgba(45,125,110,0.25), transparent 50%),
+      linear-gradient(180deg, var(--night) 0%, var(--night-2) 60%, #0d213f 100%);
+    overflow:hidden;
+    padding:140px 20px 0;
+  }
+  .pearl-field{position:absolute; inset:0; pointer-events:none;}
+  .pearl{
+    position:absolute; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #fff, var(--saffron) 70%);
+    opacity:.7; filter:blur(.3px);
+    animation:float 9s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0) translateX(0);}
+    50%{transform:translateY(-30px) translateX(15px);}
+  }
+  .hero-eyebrow{
+    color:var(--saffron); letter-spacing:4px; text-transform:uppercase; font-size:.78rem; font-weight:700; margin-bottom:18px;
+  }
+  .hero h1{
+    color:var(--pearl-2); font-size:clamp(2.4rem, 6vw, 5rem); line-height:1.08; max-width:900px;
+  }
+  .hero h1 em{color:var(--saffron); font-style:normal;}
+  .hero p.subtitle{
+    color:rgba(244,236,216,0.75); font-size:clamp(1rem,2vw,1.25rem); max-width:560px; margin:22px auto 38px;
+  }
+  .hero-buttons{display:flex; gap:18px; flex-wrap:wrap; justify-content:center;}
+  .btn{
+    padding:15px 32px; border-radius:40px; font-weight:700; font-size:.95rem;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{background:var(--saffron); color:var(--night);}
+  .btn-primary:hover{transform:translateY(-4px); box-shadow:0 14px 30px rgba(232,163,61,.4);}
+  .btn-outline{background:transparent; color:var(--pearl); border:1.5px solid rgba(244,236,216,.4);}
+  .btn-outline:hover{border-color:var(--saffron); color:var(--saffron); transform:translateY(-4px);}
 
-@keyframes fadeUp{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
+  .skyline{
+    position:relative; width:100%; height:140px; margin-top:60px;
+    display:flex; align-items:flex-end; justify-content:center; gap:2vw;
+  }
+  .minar{
+    width:18px; background:linear-gradient(180deg, rgba(244,236,216,.18), rgba(244,236,216,.05));
+    border-radius:30px 30px 0 0; position:relative;
+  }
+  .minar::after{
+    content:''; position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+    width:6px; height:14px; background:rgba(244,236,216,.18); border-radius:50% 50% 0 0;
+  }
+  .scroll-indicator{
+    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+    color:var(--pearl); opacity:.6; font-size:.75rem; letter-spacing:2px; text-transform:uppercase;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scroll-indicator .dot{
+    width:6px;height:6px;border-radius:50%; background:var(--saffron);
+    animation:bounce 1.6s infinite;
+  }
+  @keyframes bounce{0%,100%{transform:translateY(0);opacity:1;}50%{transform:translateY(10px);opacity:.3;}}
 
-.scroll-cue{
-  position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
-  font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:rgba(246,239,226,0.6);
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-}
-.scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--gold-bright), transparent); animation:scrollPulse 1.8s ease-in-out infinite;}
-@keyframes scrollPulse{ 0%,100%{transform:scaleY(1); opacity:0.5;} 50%{transform:scaleY(0.6); opacity:1;} }
+  /* ===== SECTION SHARED ===== */
+  section{padding:100px 5%;}
+  .section-head{text-align:center; max-width:680px; margin:0 auto 50px;}
+  .section-head .eyebrow{
+    color:var(--terracotta); letter-spacing:3px; text-transform:uppercase; font-size:.78rem; font-weight:700;
+  }
+  .section-head h2{font-size:clamp(1.9rem,3.6vw,2.8rem); margin-top:10px; color:var(--night);}
+  .section-head p{margin-top:14px; color:#5a5345; font-size:1.02rem;}
 
-/* ---------- Section shell ---------- */
-section{ padding:110px clamp(20px,5vw,56px); position:relative;}
-.section-head{ max-width:680px; margin:0 auto 56px; text-align:center;}
-.eyebrow{
-  font-size:0.76rem; letter-spacing:3px; text-transform:uppercase; font-weight:700;
-  color:var(--terracotta); margin-bottom:14px;
-}
-.section-head h2{ font-size:clamp(2rem,4vw,3rem); font-weight:600; color:var(--teal-deep);}
-.section-head p{ margin-top:16px; color:#5c5246; font-size:1.05rem; line-height:1.65;}
+  /* ===== MOOD SELECTION ===== */
+  .moods{background:var(--pearl);}
+  .mood-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:18px; max-width:1100px; margin:0 auto;
+  }
+  .mood-card{
+    background:var(--white); border-radius:var(--radius-arch); padding:30px 14px 22px;
+    text-align:center; cursor:pointer; border:2px solid transparent;
+    box-shadow:0 8px 24px rgba(11,31,58,0.08);
+    transition:transform .35s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .mood-card .emoji{font-size:2.1rem; display:block; margin-bottom:10px;}
+  .mood-card .label{font-weight:700; font-size:.92rem; color:var(--night);}
+  .mood-card:hover{transform:translateY(-8px); box-shadow:var(--shadow);}
+  .mood-card.active{
+    border-color:var(--saffron); background:linear-gradient(165deg,#fff,#FFF6E6);
+    box-shadow:0 14px 30px rgba(232,163,61,.3);
+  }
+  .mood-card.active::after{content:'✓ selected'; display:block; font-size:.7rem; color:var(--teal); margin-top:6px; font-weight:700;}
 
-.reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease;}
-.reveal.in{ opacity:1; transform:translateY(0);}
+  /* ===== FILTERS ===== */
+  .filters{background:var(--night-2); color:var(--pearl);}
+  .filters .section-head h2{color:var(--pearl);}
+  .filters .section-head p{color:rgba(244,236,216,.7);}
+  .filter-bar{
+    max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-bottom:30px;
+  }
+  .filter-search{
+    flex:1 1 280px; max-width:420px; position:relative;
+  }
+  .filter-search input{
+    width:100%; padding:14px 18px 14px 42px; border-radius:30px; border:none; font-size:.95rem;
+    background:rgba(244,236,216,.1); color:var(--pearl); outline:none; border:1px solid rgba(244,236,216,.2);
+  }
+  .filter-search input::placeholder{color:rgba(244,236,216,.5);}
+  .filter-search::before{content:'🔍'; position:absolute; left:16px; top:50%; transform:translateY(-50%); font-size:.9rem;}
+  .filter-groups{
+    max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px;
+  }
+  .filter-group h4{font-size:.78rem; text-transform:uppercase; letter-spacing:2px; color:var(--saffron); margin-bottom:12px;}
+  .filter-chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    padding:8px 16px; border-radius:20px; font-size:.82rem; font-weight:600;
+    background:rgba(244,236,216,.08); color:var(--pearl); border:1px solid rgba(244,236,216,.2);
+    transition:all .3s var(--ease);
+  }
+  .chip:hover{border-color:var(--saffron);}
+  .chip.active{background:var(--saffron); color:var(--night); border-color:var(--saffron);}
+  .sort-row{
+    max-width:1100px; margin:30px auto 0; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; align-items:center;
+  }
+  .sort-row label{font-size:.8rem; color:rgba(244,236,216,.7); margin-right:6px;}
+  select#sortSelect{
+    padding:9px 14px; border-radius:20px; background:rgba(244,236,216,.1); color:var(--pearl);
+    border:1px solid rgba(244,236,216,.25); font-size:.85rem;
+  }
+  select#sortSelect option{color:var(--ink);}
 
-/* ---------- Step 1: category picker ---------- */
-.picker{ background:var(--pearl);}
-.cat-grid{
-  max-width:1100px; margin:0 auto;
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:16px;
-}
-.cat-card{
-  position:relative; border:1px solid var(--line); border-radius:4px;
-  padding:28px 18px; text-align:center; cursor:pointer; background:#fff;
-  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, background .3s ease;
-  overflow:hidden;
-}
-.cat-card::before{
-  content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--teal), var(--terracotta));
-  opacity:0; transition:opacity .35s ease;
-}
-.cat-card .glyph{ font-size:2.2rem; display:block; margin-bottom:12px; transition:transform .35s ease; position:relative; z-index:1;}
-.cat-card .label{ font-weight:700; font-size:0.95rem; letter-spacing:0.3px; position:relative; z-index:1; color:var(--teal-deep); transition:color .3s ease;}
-.cat-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow); border-color:transparent;}
-.cat-card:hover::before{ opacity:1;}
-.cat-card:hover .glyph{ transform:scale(1.18) rotate(-4deg);}
-.cat-card:hover .label{ color:#fff;}
-.cat-card.active{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(199,154,69,0.25);}
-.cat-card.active::before{ opacity:1;}
-.cat-card.active .label{ color:#fff;}
-.cat-card:focus-visible{ outline:3px solid var(--gold); outline-offset:3px;}
+  /* ===== COUNTERS ===== */
+  .counters{
+    background:var(--pearl); display:flex; flex-wrap:wrap; justify-content:center; gap:60px; padding:60px 5%;
+  }
+  .counter{text-align:center;}
+  .counter .num{font-family:'Marcellus',serif; font-size:2.6rem; color:var(--terracotta);}
+  .counter .label{font-size:.82rem; text-transform:uppercase; letter-spacing:1.5px; color:#5a5345; margin-top:4px;}
 
-.cat-hint{ text-align:center; margin-top:30px; font-size:0.9rem; color:#7a6f5e; min-height:1.4em;}
-.cat-hint strong{ color:var(--terracotta);}
+  /* ===== PLANS ===== */
+  .plans{background:var(--pearl-2);}
+  .plan-grid{
+    max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:28px;
+  }
+  .plan-card{
+    background:var(--white); border-radius:22px; overflow:hidden; box-shadow:0 8px 24px rgba(11,31,58,.08);
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease); display:flex; flex-direction:column;
+    opacity:0; transform:translateY(30px);
+  }
+  .plan-card.show{animation:cardIn .6s var(--ease) forwards;}
+  @keyframes cardIn{to{opacity:1; transform:translateY(0);}}
+  .plan-card:hover{transform:translateY(-10px); box-shadow:0 24px 50px rgba(11,31,58,.18);}
+  .plan-banner{
+    height:130px; position:relative; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, var(--night), var(--teal));
+  }
+  .plan-banner .cat-emoji{font-size:2.6rem;}
+  .plan-banner .fav-btn{
+    position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.18); color:#fff; font-size:1rem; display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(6px); transition:all .3s var(--ease);
+  }
+  .plan-banner .fav-btn.active{background:var(--terracotta);}
+  .plan-banner .rating-badge{
+    position:absolute; bottom:-14px; left:18px; background:var(--saffron); color:var(--night);
+    font-weight:800; font-size:.78rem; padding:6px 12px; border-radius:14px; box-shadow:0 6px 14px rgba(0,0,0,.15);
+  }
+  .plan-body{padding:26px 22px 20px;}
+  .plan-cat{color:var(--terracotta); font-size:.72rem; text-transform:uppercase; letter-spacing:2px; font-weight:700;}
+  .plan-title{font-family:'Marcellus',serif; font-size:1.25rem; margin:6px 0 10px; color:var(--night);}
+  .plan-meta{display:flex; flex-wrap:wrap; gap:10px; font-size:.78rem; color:#6b6457; margin-bottom:14px;}
+  .plan-meta span{display:flex; align-items:center; gap:4px;}
+  .mini-timeline{display:flex; align-items:center; gap:4px; margin-bottom:16px; flex-wrap:wrap;}
+  .mini-timeline .dot{width:8px;height:8px; border-radius:50%; background:var(--teal);}
+  .mini-timeline .line{flex:1; min-width:8px; height:2px; background:#e3ddc9;}
+  .plan-perfect{font-size:.78rem; color:#6b6457; margin-bottom:16px;}
+  .plan-perfect b{color:var(--night);}
+  .plan-actions{display:flex; gap:8px; padding:0 22px 22px;}
+  .plan-actions button{
+    flex:1; padding:10px 8px; border-radius:14px; font-size:.78rem; font-weight:700;
+    transition:all .3s var(--ease);
+  }
+  .btn-view{background:var(--night); color:var(--pearl);}
+  .btn-view:hover{background:var(--terracotta);}
+  .btn-route{background:#eee6d3; color:var(--night);}
+  .btn-route:hover{background:var(--saffron);}
 
-/* ---------- Step 2: results ---------- */
-.results{ background:var(--pearl-dim); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-.match-banner{
-  max-width:880px; margin:0 auto 40px; text-align:center;
-  display:none;
-}
-.match-banner.show{ display:block;}
-.match-banner .stars{ color:var(--gold); letter-spacing:3px; font-size:1rem; margin-bottom:10px;}
-.match-banner h3{ font-size:clamp(1.5rem,3vw,2.1rem); color:var(--teal-deep);}
-.match-banner p{ margin-top:10px; color:#5c5246;}
+  .load-more-wrap{text-align:center; margin-top:50px;}
+  .btn-load{
+    background:transparent; border:1.5px solid var(--terracotta); color:var(--terracotta);
+    padding:13px 34px; border-radius:30px; font-weight:700; font-size:.9rem;
+  }
+  .btn-load:hover{background:var(--terracotta); color:#fff;}
 
-.plans-grid{
-  max-width:1180px; margin:0 auto;
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
-  gap:26px;
-}
-.plan-card{
-  background:#fff; border:1px solid var(--line); border-radius:4px; overflow:hidden;
-  transition: transform .3s ease, box-shadow .3s ease;
-  cursor:pointer; display:flex; flex-direction:column;
-}
-.plan-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow);}
-.plan-card .top{
-  padding:28px 26px; border-bottom:1px solid var(--line);
-  display:flex; justify-content:space-between; align-items:flex-start;
-}
-.plan-card .top > div{ text-align:left;}
-.plan-card .tag{ display:inline-block; font-size:0.76rem; text-transform:uppercase;
-  letter-spacing:2.5px; font-weight:700; color:var(--terracotta); margin-bottom:8px;}
-.plan-card h3{ font-size:1.38rem; color:var(--teal-deep); margin:4px 0;}
-.plan-card .best{ font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase;
-  font-weight:700; color:var(--gold); white-space:nowrap;}
+  /* ===== WEATHER WIDGET ===== */
+  .weather-strip{
+    max-width:1100px; margin:0 auto 50px; background:linear-gradient(120deg,#FFF6E6,#fff);
+    border-radius:20px; padding:20px 28px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:14px; box-shadow:0 8px 24px rgba(11,31,58,.06); border:1px solid #f0e6cc;
+  }
+  .weather-strip .w-left{display:flex; align-items:center; gap:14px;}
+  .weather-strip .w-icon{font-size:2.2rem;}
+  .weather-strip .w-temp{font-family:'Marcellus',serif; font-size:1.6rem; color:var(--night);}
+  .weather-strip .w-desc{font-size:.82rem; color:#6b6457;}
+  .weather-strip .w-tip{font-size:.82rem; color:var(--teal); font-weight:700;}
 
-.plan-card .stops{ padding:20px 26px; border-bottom:1px solid var(--line); flex:1;}
-.plan-card .stops ul{ list-style:none; margin:0; padding:0; color:#5c5246; font-size:0.95rem; line-height:1.8;}
-.plan-card .stops li::before{ content:'→ '; color:var(--gold); font-weight:700; margin-right:6px;}
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(11,31,58,.7); backdrop-filter:blur(6px);
+    display:none; align-items:center; justify-content:center; z-index:2000; padding:20px;
+  }
+  .modal-overlay.open{display:flex; animation:fadeIn .3s var(--ease);}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .modal{
+    background:var(--pearl-2); border-radius:26px; max-width:680px; width:100%; max-height:88vh; overflow-y:auto;
+    position:relative; animation:modalIn .4s var(--ease);
+  }
+  @keyframes modalIn{from{opacity:0; transform:translateY(40px) scale(.97);}to{opacity:1; transform:translateY(0) scale(1);}}
+  .modal-header{
+    background:linear-gradient(135deg, var(--night), var(--teal)); color:#fff; padding:36px 30px 50px; position:relative;
+    border-radius:26px 26px 0 0;
+  }
+  .modal-close{
+    position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.15); color:#fff; font-size:1.1rem;
+  }
+  .modal-header h3{font-family:'Marcellus',serif; font-size:1.7rem;}
+  .modal-header .modal-cat{color:var(--saffron); font-size:.78rem; letter-spacing:2px; text-transform:uppercase; font-weight:700;}
+  .modal-body{padding:30px 30px 36px;}
+  .modal-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:14px; margin-bottom:26px;}
+  .modal-stat{background:#fff; border-radius:14px; padding:14px; text-align:center; box-shadow:0 4px 14px rgba(11,31,58,.06);}
+  .modal-stat .v{font-family:'Marcellus',serif; font-size:1.2rem; color:var(--terracotta);}
+  .modal-stat .l{font-size:.68rem; color:#6b6457; text-transform:uppercase; letter-spacing:1px;}
+  .modal-section{margin-bottom:24px;}
+  .modal-section h4{font-size:.8rem; text-transform:uppercase; letter-spacing:2px; color:var(--teal); margin-bottom:12px;}
+  .timeline{position:relative; padding-left:24px;}
+  .timeline::before{content:''; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:#e3ddc9;}
+  .t-item{position:relative; margin-bottom:18px; opacity:0; transform:translateX(-10px); animation:tIn .5s var(--ease) forwards;}
+  @keyframes tIn{to{opacity:1; transform:translateX(0);}}
+  .t-item::before{content:''; position:absolute; left:-24px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--saffron); border:2px solid #fff; box-shadow:0 0 0 2px var(--saffron);}
+  .t-item .t-time{font-size:.72rem; color:var(--terracotta); font-weight:700;}
+  .t-item .t-name{font-weight:700; color:var(--night); font-size:.95rem;}
+  .modal-section p{font-size:.88rem; color:#5a5345; line-height:1.6;}
+  .modal-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+  .modal-actions button{
+    flex:1; min-width:120px; padding:12px; border-radius:14px; font-size:.8rem; font-weight:700;
+  }
+  .ma-maps{background:var(--saffron); color:var(--night);}
+  .ma-share{background:#eee6d3; color:var(--night);}
+  .ma-print{background:#eee6d3; color:var(--night);}
+  .ma-download{background:#eee6d3; color:var(--night);}
+  .ma-copy{background:#eee6d3; color:var(--night);}
 
-.plan-card .perfect{ padding:0 26px; color:#5c5246; font-size:0.9rem; font-style:italic; margin:18px 0;}
+  /* ===== TOAST ===== */
+  .toast{
+    position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px);
+    background:var(--night); color:var(--pearl); padding:14px 26px; border-radius:30px; font-size:.85rem;
+    box-shadow:0 12px 30px rgba(0,0,0,.25); z-index:3000; transition:transform .4s var(--ease); font-weight:600;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0);}
 
-.plan-card .open-btn{ padding:18px 26px; background:transparent; border:none;
-  color:var(--gold); font-weight:700; font-size:0.95rem; letter-spacing:0.3px;
-  cursor:pointer; transition: color .2s ease; text-align:left; margin-top:auto;}
-.plan-card .open-btn:hover{ color:var(--gold-bright);}
+  /* ===== FAB & BACK TO TOP ===== */
+  .fab{
+    position:fixed; bottom:30px; right:24px; width:56px; height:56px; border-radius:50%;
+    background:var(--terracotta); color:#fff; font-size:1.4rem; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 14px 30px rgba(193,67,45,.4); z-index:900; transition:transform .3s var(--ease);
+  }
+  .fab:hover{transform:scale(1.1) rotate(10deg);}
+  .back-top{
+    position:fixed; bottom:96px; right:24px; width:44px; height:44px; border-radius:50%;
+    background:var(--night); color:var(--pearl); font-size:1.1rem; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px rgba(11,31,58,.3); z-index:900; opacity:0; pointer-events:none; transition:all .35s var(--ease);
+  }
+  .back-top.show{opacity:1; pointer-events:auto;}
 
-/* ---------- Modal ---------- */
-.modal-overlay{
-  position:fixed; inset:0; background:rgba(26,22,16,0.85); backdrop-filter:blur(6px);
-  display:flex; align-items:center; justify-content:center; z-index:200; padding:20px;
-  opacity:0; pointer-events:none; transition:opacity .35s ease;
-}
-.modal-overlay.show{ opacity:1; pointer-events:all;}
+  /* ===== LOADER ===== */
+  .loader{
+    position:fixed; inset:0; background:var(--night); z-index:5000; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:18px; transition:opacity .6s var(--ease), visibility .6s var(--ease);
+  }
+  .loader.hide{opacity:0; visibility:hidden;}
+  .loader .arch{
+    width:50px; height:60px; border-radius:60px 60px 6px 6px; border:4px solid var(--saffron); border-bottom:none;
+    animation:pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1); opacity:1;}50%{transform:scale(1.15); opacity:.6;}}
+  .loader p{color:var(--pearl); font-family:'Marcellus',serif; letter-spacing:2px; font-size:.9rem;}
 
-.modal-body{
-  background:#fff; border-radius:6px; max-width:560px; width:100%;
-  max-height:85vh; overflow-y:auto; position:relative;
-  animation: slideUp .4s ease;
-}
-@keyframes slideUp{ from{ transform:translateY(40px); opacity:0;} to{ transform:translateY(0); opacity:1;} }
+  /* ===== FOOTER ===== */
+  footer{background:var(--night); color:var(--pearl); padding:70px 5% 30px;}
+  .footer-grid{
+    max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px;
+    padding-bottom:40px; border-bottom:1px solid rgba(244,236,216,.12);
+  }
+  .footer-grid h4{font-family:'Marcellus',serif; font-size:1.05rem; color:var(--saffron); margin-bottom:16px;}
+  .footer-grid p, .footer-grid li{font-size:.85rem; color:rgba(244,236,216,.65); margin-bottom:8px; line-height:1.6;}
+  .footer-grid li a:hover{color:var(--saffron);}
+  .footer-bottom{
+    max-width:1200px; margin:0 auto; padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:.78rem; color:rgba(244,236,216,.5);
+  }
 
-.modal-head{
-  position:sticky; top:0; background:#fff; z-index:10;
-  padding:28px 26px; border-bottom:1px solid var(--line);
-}
-.modal-head .close{
-  position:absolute; top:18px; right:18px; background:none; border:none;
-  font-size:1.4rem; cursor:pointer; color:var(--teal-deep); padding:6px;
-  opacity:0.6; transition:opacity .2s ease;
-}
-.modal-head .close:hover{ opacity:1;}
-.modal-head .tag{ display:inline-block; font-size:0.76rem; text-transform:uppercase;
-  letter-spacing:2.5px; font-weight:700; color:var(--terracotta); margin-bottom:8px;}
-.modal-head h3{ font-size:1.8rem; color:var(--teal-deep); margin:10px 0;}
-.modal-head p{ color:#5c5246; font-size:0.95rem; margin-top:8px; line-height:1.6;}
-
-.timeline{ padding:0;}
-.t-item{
-  display:flex; gap:18px; padding:24px 26px; border-bottom:1px solid var(--line);
-  opacity:0; animation: fadeUp .6s ease forwards;
-}
-.t-dot{
-  width:14px; height:14px; background:var(--gold); border-radius:50%;
-  flex-shrink:0; margin-top:6px;
-}
-.t-body{ text-align:left; flex:1;}
-.t-body .time{ font-size:0.8rem; letter-spacing:2px; text-transform:uppercase;
-  font-weight:700; color:var(--terracotta); margin-bottom:4px;}
-.t-body .place{ font-size:1.15rem; font-weight:700; color:var(--teal-deep); margin-bottom:6px;}
-.t-body .desc{ color:#5c5246; font-size:0.9rem; line-height:1.5; margin-bottom:8px;}
-.t-body .extra{ font-size:0.85rem; color:#9a8f7e; letter-spacing:0.3px;}
-
-.modal-foot{
-  padding:24px 26px; border-top:1px solid var(--line); text-align:center;
-}
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:860px){
+    .nav-links{
+      position:fixed; top:0; right:0; height:100vh; width:240px; background:var(--night); flex-direction:column;
+      padding:90px 26px; align-items:flex-start; transform:translateX(100%); transition:transform .4s var(--ease);
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-toggle{display:flex;}
+  }
+  @media (max-width:600px){
+    section{padding:70px 5%;}
+    .counters{gap:30px;}
+    .plan-actions{flex-direction:column;}
+  }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="brand">
-    <span class="mark">🏛️</span>
-    <span>Hyderabad Explorer</span>
-  </div>
-  <nav class="topnav">
-    <a href="#plans">Plans</a>
-    <a href="#moods">Moods</a>
-  </nav>
+<div class="loader" id="loader">
+  <div class="arch"></div>
+  <p>HYDERABAD EXPLORER</p>
 </div>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="jali-bg"></div>
-  <div class="hero-eyebrow">
-    <span class="rule"></span>
-    <span>Discover Your Perfect Day</span>
-    <span class="rule"></span>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo"><div class="arch-icon"></div><span>Hyderabad Explorer</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#moods">Moods</a></li>
+    <li><a href="#filters">Filters</a></li>
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#footer">Contact</a></li>
+    <li><a href="#plans" class="nav-cta">Start Exploring</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="pearl-field" id="pearlField"></div>
+  <div class="hero-eyebrow">15 KM AROUND HITECH CITY</div>
+  <h1>Discover Hyderabad <em>Around Hitech City</em></h1>
+  <p class="subtitle">Choose your mood and explore perfectly planned one-day trips — temples at dawn, cafes at dusk, everything mapped from where you stand.</p>
+  <div class="hero-buttons">
+    <a href="#plans" class="btn btn-primary">✨ Start Exploring</a>
+    <a href="#moods" class="btn btn-outline">🗂 Browse Plans</a>
   </div>
-  <h1>Roam. Enjoy. <em>Devotion.</em></h1>
-  <p class="sub">Curated plans for Hyderabad that start with morning devotion, followed by your perfect afternoon and evening. We understand — devotion comes first, always in the morning.</p>
-  <div class="hero-cta">
-    <button class="btn btn-gold" id="startBtn">Start Planning →</button>
+  <div class="skyline" id="skyline"></div>
+  <div class="scroll-indicator"><span>Scroll</span><span class="dot"></span></div>
+</header>
+
+<!-- MOODS -->
+<section class="moods" id="moods">
+  <div class="section-head">
+    <div class="eyebrow">Pick a Vibe</div>
+    <h2>What's today's mood?</h2>
+    <p>Select one or more moods — plans reorder instantly to match what you're craving.</p>
   </div>
-  <div class="scroll-cue" id="scrollCue">
-    <span>Scroll to explore</span>
-    <div class="line"></div>
+  <div class="mood-grid" id="moodGrid"></div>
+</section>
+
+<!-- FILTERS -->
+<section class="filters" id="filters">
+  <div class="section-head">
+    <div class="eyebrow">Fine-tune</div>
+    <h2>Filter your perfect day</h2>
+    <p>Narrow it down by distance, ride, company, and budget.</p>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-search"><input type="text" id="searchInput" placeholder="Search a place or plan…"></div>
+  </div>
+  <div class="filter-groups">
+    <div class="filter-group">
+      <h4>Travel Distance</h4>
+      <div class="filter-chip-row" data-group="distance">
+        <button class="chip" data-value="5">Within 5 km</button>
+        <button class="chip" data-value="10">Within 10 km</button>
+        <button class="chip" data-value="15">Within 15 km</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>Travel Mode</h4>
+      <div class="filter-chip-row" data-group="mode">
+        <button class="chip" data-value="Bike">🏍 Bike</button>
+        <button class="chip" data-value="Car">🚗 Car</button>
+        <button class="chip" data-value="Metro">🚇 Metro</button>
+        <button class="chip" data-value="Walking">🚶 Walking</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>Group Type</h4>
+      <div class="filter-chip-row" data-group="group">
+        <button class="chip" data-value="Solo">🧍 Solo</button>
+        <button class="chip" data-value="Friends">🧑‍🤝‍🧑 Friends</button>
+        <button class="chip" data-value="Couple">💑 Couple</button>
+        <button class="chip" data-value="Family">👨‍👩‍👧 Family</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>Budget</h4>
+      <div class="filter-chip-row" data-group="budget">
+        <button class="chip" data-value="Free">Free</button>
+        <button class="chip" data-value="500">₹500</button>
+        <button class="chip" data-value="1000">₹1000</button>
+        <button class="chip" data-value="2000">₹2000+</button>
+      </div>
+    </div>
+  </div>
+  <div class="sort-row">
+    <label for="sortSelect">Sort by</label>
+    <select id="sortSelect">
+      <option value="default">Recommended</option>
+      <option value="distance">Distance</option>
+      <option value="popularity">Popularity</option>
+      <option value="budget">Budget</option>
+      <option value="duration">Duration</option>
+      <option value="nearest">Nearest</option>
+    </select>
+    <button class="chip" id="favOnlyBtn">♥ Favorites Only</button>
+    <button class="chip" id="clearFiltersBtn">✕ Clear All</button>
   </div>
 </section>
 
-<!-- ============ CATEGORY SELECTOR ============ -->
-<section class="picker" id="moods">
-  <div class="section-head reveal">
-    <div class="eyebrow">Step 1</div>
-    <h2>What's Your Vibe?</h2>
-    <p>Pick one or more moods to discover the perfect itinerary. Devotion plans always start in the morning before lunch.</p>
+<!-- COUNTERS -->
+<div class="counters" id="counters">
+  <div class="counter"><div class="num" data-target="15">0</div><div class="label">Curated Plans</div></div>
+  <div class="counter"><div class="num" data-target="22">0</div><div class="label">Places Covered</div></div>
+  <div class="counter"><div class="num" data-target="15">0</div><div class="label">Km Max Radius</div></div>
+  <div class="counter"><div class="num" data-target="11">0</div><div class="label">Moods to Choose</div></div>
+</div>
+
+<!-- PLANS -->
+<section class="plans" id="plans">
+  <div class="section-head">
+    <div class="eyebrow">Your Itineraries</div>
+    <h2>15 Days, 15 Different Hyderabads</h2>
+    <p>Every plan starts at Hitech City. Temples always sit in the morning slot — never after lunch.</p>
   </div>
-  <div class="cat-grid" id="catGrid"></div>
-  <div class="cat-hint" id="catHint">Tap a mood above to see your best-matched plan.</div>
+  <div class="weather-strip">
+    <div class="w-left">
+      <div class="w-icon">⛅</div>
+      <div><div class="w-temp">29°C, Hyderabad</div><div class="w-desc">Partly cloudy · Feels like 31°C</div></div>
+    </div>
+    <div class="w-tip">🌅 Best window today: 6:30 AM – 11:30 AM &amp; 4:30 PM – 7:30 PM</div>
+  </div>
+  <div class="plan-grid" id="planGrid"></div>
+  <div class="load-more-wrap"><button class="btn-load" id="loadMoreBtn">Load More Plans</button></div>
 </section>
 
-<!-- ============ RESULTS ============ -->
-<section class="results" id="plans">
-  <div class="match-banner" id="matchBanner">
-    <div class="stars">✦ ✦ ✦</div>
-    <h3 id="matchTitle"></h3>
-    <p id="matchSub"></p>
-  </div>
-  <div class="plans-grid" id="plansGrid"></div>
-</section>
-
-<!-- ============ MODAL ============ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
-  <div class="modal-body" id="modalBody"></div>
+  <div class="modal" id="modalContent"></div>
 </div>
+
+<div class="toast" id="toast"></div>
+<button class="fab" id="fab" title="Quick Actions">⚡</button>
+<button class="back-top" id="backTop" title="Back to top">↑</button>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div>
+      <h4>About</h4>
+      <p>Hyderabad Explorer curates one-day itineraries within 15 km of Hitech City — built for IT-corridor explorers who want a great day out without the long drive.</p>
+    </div>
+    <div>
+      <h4>Travel Tips</h4>
+      <ul>
+        <li>Visit temples before 11:30 AM to beat the heat &amp; crowds.</li>
+        <li>Carry water — most outdoor spots have limited shade.</li>
+        <li>Metro covers Raidurg, Hitech City &amp; Ameerpet well.</li>
+        <li>Weekends get busy at malls — go early.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Emergency Numbers</h4>
+      <ul>
+        <li>Police: 100</li>
+        <li>Ambulance: 108</li>
+        <li>Women's Helpline: 181</li>
+        <li>Tourist Helpline: 1363</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>hello@hyderabadexplorer.in</li>
+        <li>Hitech City, Hyderabad, Telangana</li>
+        <li>Mon–Sun, 9 AM – 9 PM</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Hyderabad Explorer. All rights reserved.</span>
+    <span>Made with ♥ for Deccan wanderers.</span>
+  </div>
+</footer>
 
 <script>
-const plans = [
-  {
-    id:1, title:"Spiritual Start → Old City", tag:"10 AM–5 PM · Devotion + Culture", featured:true,
-    moods:["devotion","heritage","photography"],
-    perfect:"Spiritual seekers with cultural interest.",
-    stops:[
-      {time:"10:00 AM", place:"Charminar & Mecca Masjid", dist:"Old City", hours:"6:00 AM–10:00 PM", desc:"Witness the iconic Charminar; explore the adjacent Mecca Masjid for serene prayers."},
-      {time:"11:00 AM", place:"Jami Ul-Alhana Mosque", dist:"Old City", hours:"Open all day", desc:"Beautiful heritage mosque with stunning architecture, perfect for photography."},
-      {time:"12:30 PM", place:"Paradise Biryani", dist:"Old City", hours:"12:00 PM–3:00 PM, 6:00 PM–11:00 PM", desc:"Authentic Hyderabadi biryani and local delicacies."},
-      {time:"2:00 PM", place:"Salarjung Museum", dist:"~3 km", hours:"9:30 AM–5:00 PM", desc:"One of India's finest museums with art, sculptures, and historical artifacts."},
-      {time:"4:00 PM", place:"Laad Bazaar", dist:"Old City", hours:"10:00 AM–8:00 PM", desc:"Traditional shopping for bangles, handicrafts, and souvenirs."}
-    ]
-  },
-  {
-    id:2, title:"Divine Temples → Nature Trail", tag:"10 AM–5 PM · Devotion + Nature", featured:true,
-    moods:["devotion","nature","photography","family"],
-    perfect:"Families seeking morning temple visits and afternoon nature walks.",
-    stops:[
-      {time:"10:00 AM", place:"Birla Mandir", dist:"~5 km", hours:"6:00 AM–12:00 PM, 4:00 PM–8:30 PM", desc:"Peaceful Hindu temple with scenic city views, ideal for prayers and photography."},
-      {time:"11:00 AM", place:"Sri Jagannath Temple", dist:"~2 km", hours:"5:00 AM–12:00 PM, 4:00 PM–9:00 PM", desc:"Serene darshan with beautiful architecture."},
-      {time:"12:00 PM", place:"Lunch at Café Coffee Day", dist:"~3 km", hours:"7:00 AM–10:00 PM", desc:"Refresh with a light meal before outdoor activities."},
-      {time:"1:30 PM", place:"Hussain Sagar Lake", dist:"~4 km", hours:"Open all day", desc:"Scenic lake for boating and walking."},
-      {time:"3:30 PM", place:"NATA Farms or Durgam Cheruvu", dist:"~8 km", hours:"Open all day", desc:"Peaceful nature spot with lake views and light snacks."}
-    ]
-  },
-  {
-    id:3, title:"Sunrise Temple → Culinary Journey", tag:"10 AM–5 PM · Devotion + Food", featured:true,
-    moods:["devotion","food","adventure"],
-    perfect:"Food lovers who prioritize temple visits.",
-    stops:[
-      {time:"10:00 AM", place:"Sangameswara Temple", dist:"~35 km (Sanghi area)", hours:"5:00 AM–12:30 PM, 4:00 PM–8:00 PM", desc:"Hilltop temple with scenic views and spiritual energy."},
-      {time:"11:30 AM", place:"Nirmal Pottery & Art Village", dist:"~75 km", hours:"9:00 AM–5:00 PM", desc:"Experience local artisan crafts and heritage."},
-      {time:"1:00 PM", place:"Lunch at Chutneys", dist:"~30 km from temple", hours:"12:00 PM–3:00 PM, 6:00 PM–10:00 PM", desc:"Authentic South Indian non-veg or veg thali."},
-      {time:"3:00 PM", place:"Ramoji Film City", dist:"~35 km", hours:"9:00 AM–5:30 PM", desc:"Film sets, gardens, and rides."}
-    ]
-  },
-  {
-    id:4, title:"Temple & Tech Tour", tag:"10 AM–5 PM · Devotion + Heritage + Adventure", featured:false,
-    moods:["devotion","heritage","adventure","friends"],
-    perfect:"Groups interested in spirituality and modern Hyderabad.",
-    stops:[
-      {time:"10:00 AM", place:"Lumbini Park & Buddha Statue", dist:"~3 km", hours:"6:00 AM–9:00 PM", desc:"Serene stop at the iconic Buddha statue with park views."},
-      {time:"11:00 AM", place:"Charminar Heritage Walk", dist:"Old City", hours:"Open all day", desc:"Guided heritage walk through historic lanes."},
-      {time:"12:30 PM", place:"Hotel Shadab", dist:"Old City", hours:"11:00 AM–11:00 PM", desc:"Legendary Hyderabadi cuisine with famous haleem/paya."},
-      {time:"2:00 PM", place:"Hyderabad Information Technology Park", dist:"~8 km", hours:"Open all day", desc:"See the tech hub that made Hyderabad famous."},
-      {time:"3:30 PM", place:"Golconda Fort", dist:"~9 km", hours:"9:00 AM–5:30 PM", desc:"Historic fort with sweeping views from the ramparts."}
-    ]
-  },
-  {
-    id:5, title:"Pure Fun Day — Family Edition", tag:"10 AM–5 PM · Family + Adventure + Fun", featured:false,
-    moods:["family","adventure","fun","friends"],
-    perfect:"Families with kids seeking fun and adventure.",
-    stops:[
-      {time:"10:00 AM", place:"Wonderla Amusement Park", dist:"~30 km", hours:"10:00 AM–6:00 PM", desc:"Rides, water slides, and theme park attractions."},
-      {time:"12:00 PM", place:"In-park Lunch", dist:"Wonderla", hours:"On-site", desc:"Food courts and casual dining inside."},
-      {time:"1:30 PM", place:"Water Sports", dist:"Wonderla", hours:"Included", desc:"Additional water attractions."},
-      {time:"3:30 PM", place:"Return to City, Snacks", dist:"~30 km", hours:"Anytime", desc:"Light refreshment on the way back."},
-      {time:"4:30 PM", place:"KBR Park or Necklace Road Walk", dist:"~5 km", hours:"Open all day", desc:"Relaxed walk and ice cream by the lake."}
-    ]
-  },
-  {
-    id:6, title:"Full-Day Scenic Drive", tag:"10 AM–5 PM · Adventure + Nature + Devotion", featured:false,
-    moods:["adventure","nature","photography","friends"],
-    perfect:"Adventure seekers and road trip enthusiasts.",
-    stops:[
-      {time:"10:00 AM", place:"Sangameswara Temple (Devotion Stop)", dist:"~35 km", hours:"5:00 AM–12:30 PM", desc:"Spiritual stop at this hilltop temple."},
-      {time:"11:30 AM", place:"Nagarjuna Sagar Dam", dist:"~60 km", hours:"8:00 AM–5:00 PM", desc:"Scenic dam and wildlife sanctuary views."},
-      {time:"1:00 PM", place:"Local Restaurant Lunch", dist:"En route", hours:"12:00 PM–2:00 PM", desc:"Authentic biryani or local non-veg specialties."},
-      {time:"3:00 PM", place:"Ananthagiri Hills", dist:"~75 km", hours:"Open all day", desc:"Scenic hill station with trekking and forest roads."}
-    ]
-  }
+/* ===================== DATA ===================== */
+const MOODS = [
+  {id:'devotion', label:'Devotion', emoji:'🛕'},
+  {id:'heritage', label:'Heritage', emoji:'🏛'},
+  {id:'nature', label:'Nature', emoji:'🌳'},
+  {id:'food', label:'Food', emoji:'🍽'},
+  {id:'shopping', label:'Shopping', emoji:'🛍'},
+  {id:'adventure', label:'Adventure', emoji:'🎢'},
+  {id:'photography', label:'Photography', emoji:'📸'},
+  {id:'family', label:'Family', emoji:'👨‍👩‍👧'},
+  {id:'fun', label:'Fun', emoji:'🎉'},
+  {id:'cafes', label:'Cafes', emoji:'☕'},
+  {id:'sunset', label:'Sunset', emoji:'🌅'},
 ];
 
-const moods = [
-  {key:"devotion", icon:"🛕", label:"Devotion"},
-  {key:"heritage", icon:"🏛️", label:"Heritage"},
-  {key:"nature", icon:"🌳", label:"Nature"},
-  {key:"food", icon:"🍽️", label:"Food"},
-  {key:"shopping", icon:"🛍️", label:"Shopping"},
-  {key:"adventure", icon:"🎢", label:"Adventure"},
-  {key:"photography", icon:"📸", label:"Photography"},
-  {key:"friends", icon:"👯", label:"Friends"},
-  {key:"family", icon:"👨‍👩‍👧", label:"Family"},
-  {key:"fun", icon:"🎉", label:"Pure Fun"}
+const PLANS = [
+  {id:1, title:"Devotion at Dawn", cat:"Devotion & Craft", emoji:"🛕", moods:["devotion","heritage","shopping"], cost:800, distance:8, mode:["Car","Bike"], group:["Family","Friends"], duration:"9 hrs", rating:4.7, perfect:"Families seeking a balanced spiritual + leisure day",
+    timeline:[["6:30 AM","Peddamma Temple — morning darshan"],["8:30 AM","Breakfast near Jubilee Hills"],["10:30 AM","Shilparamam crafts village"],["1:00 PM","Lunch at Shilparamam food court"],["3:00 PM","Inorbit Mall shopping"],["5:30 PM","Durgam Cheruvu sunset"],["7:30 PM","Dinner at Gachibowli restaurants"]],
+    tips:"Reach Peddamma Temple before 7 AM to skip the queue. Shilparamam entry ticket required.", food:"Try Irani chai near Jubilee Hills before the temple visit.", parking:"Ample parking at Shilparamam; limited near temple — arrive early.", hours:"Temple 6 AM–12 PM, 4 PM–8 PM · Shilparamam 10:30 AM–7 PM"},
+  {id:2, title:"Fort & Tombs Trail", cat:"Heritage", emoji:"🏛", moods:["heritage","devotion","photography"], cost:600, distance:14, mode:["Car"], group:["Solo","Friends"], duration:"10 hrs", rating:4.8, perfect:"History lovers and photographers",
+    timeline:[["6:30 AM","Chilkur Balaji Temple — visa-wish temple"],["8:30 AM","Breakfast at Osman Sagar viewpoint dhaba"],["10:00 AM","Osman Sagar (Gandipet) lakeside walk"],["1:00 PM","Lunch near Golconda"],["2:30 PM","Golconda Fort exploration"],["5:00 PM","Qutb Shahi Tombs at golden hour"],["7:30 PM","Dinner at Old City eatery"]],
+    tips:"Golconda Fort sound & light show worth catching if time permits. Wear comfortable shoes for the fort climb.", food:"Try Hyderabadi biryani near Golconda before the tombs visit.", parking:"Paid parking available at both fort and tombs.", hours:"Golconda Fort 9 AM–5:30 PM · Tombs 9:30 AM–5 PM"},
+  {id:3, title:"Hilltop Devotion & Cafes", cat:"Devotion & Cafes", emoji:"🛕", moods:["devotion","cafes","fun"], cost:700, distance:6, mode:["Bike","Car"], group:["Couple","Friends"], duration:"8 hrs", rating:4.5, perfect:"Couples wanting a relaxed spiritual-to-chill day",
+    timeline:[["7:00 AM","Jagannath Temple morning aarti"],["9:00 AM","Breakfast at a Jubilee Hills cafe"],["10:30 AM","KBR National Park nature walk"],["1:00 PM","Lunch in Jubilee Hills"],["3:00 PM","GVK One mall browsing"],["5:00 PM","Jubilee Hills specialty cafes"],["8:00 PM","Dinner with rooftop views"]],
+    tips:"KBR Park closes briefly midday — plan your walk before 11:30 AM.", food:"Jubilee Hills has Hyderabad's best third-wave coffee spots.", parking:"Street parking near KBR Park gets full by 9 AM.", hours:"KBR Park 5:30 AM–9:30 AM, 4 PM–6:30 PM"},
+  {id:4, title:"Golden Temple & Garden Day", cat:"Devotion & Nature", emoji:"🛕", moods:["devotion","nature","shopping","fun"], cost:1200, distance:11, mode:["Car"], group:["Family"], duration:"10 hrs", rating:4.6, perfect:"Families with kids wanting variety",
+    timeline:[["6:30 AM","Hare Krishna Golden Temple darshan"],["8:30 AM","Breakfast nearby"],["10:00 AM","Botanical Garden Kondapur stroll"],["1:00 PM","Lunch at Sarath City food court"],["2:30 PM","Sarath City Capital Mall"],["4:30 PM","AMB Cinemas — catch a movie"],["7:30 PM","Family dinner"]],
+    tips:"Botanical Garden is huge — rent a buggy if visiting with elderly family members.", food:"Sarath City has a great rooftop food court for groups.", parking:"Multi-level parking at Sarath City Mall.", hours:"Botanical Garden 9 AM–6 PM · Mall 11 AM–10 PM"},
+  {id:5, title:"Temple, Tech & Lakeview", cat:"Devotion & Shopping", emoji:"🛕", moods:["devotion","shopping","nature","photography"], cost:900, distance:9, mode:["Car","Metro"], group:["Solo","Couple"], duration:"9 hrs", rating:4.4, perfect:"Shoppers who still want a spiritual start",
+    timeline:[["6:30 AM","Peddamma Temple darshan"],["8:30 AM","Breakfast at Mindspace food street"],["10:00 AM","IKEA Hyderabad browsing"],["1:00 PM","Lunch at IKEA restaurant"],["3:00 PM","Mindspace & Raidurg stroll"],["5:30 PM","Durgam Cheruvu cable bridge sunset"],["7:30 PM","Dinner at Raidurg"]],
+    tips:"IKEA can easily eat 3 hours — set a budget before you enter.", food:"IKEA's Swedish meatballs are a local favorite stop.", parking:"Free parking at IKEA and Mindspace.", hours:"IKEA 10 AM–10 PM · Durgam Cheruvu bridge open till 10 PM"},
+  {id:6, title:"Sky-High Adventure Day", cat:"Adventure & Fun", emoji:"🎢", moods:["adventure","fun","family","food"], cost:1500, distance:7, mode:["Car"], group:["Friends","Family"], duration:"9 hrs", rating:4.6, perfect:"Thrill-seekers and active families",
+    timeline:[["8:00 AM","Breakfast near Hitech City"],["9:30 AM","Sky Zone trampoline park"],["12:30 PM","Lunch at Inorbit Mall"],["2:00 PM","Game Palacio arcade"],["4:00 PM","Inorbit Mall shopping break"],["6:00 PM","Durgam Cheruvu evening walk"],["8:00 PM","Dinner in Madhapur"]],
+    tips:"Sky Zone requires socks with grip — carry your own or buy on-site.", food:"Inorbit's food court has options for every group member.", parking:"Inorbit Mall has the largest parking lot in the area.", hours:"Sky Zone 10 AM–10 PM · Game Palacio 11 AM–11 PM"},
+  {id:7, title:"Lakes, Lens & Sunsets", cat:"Nature & Photography", emoji:"📸", moods:["nature","photography","sunset","cafes"], cost:500, distance:10, mode:["Bike"], group:["Solo","Couple"], duration:"8 hrs", rating:4.7, perfect:"Photographers chasing golden hour",
+    timeline:[["7:00 AM","Sunrise at Osman Sagar"],["9:00 AM","Breakfast at a lakeside dhaba"],["11:00 AM","Botanical Garden macro photography"],["1:30 PM","Lunch near Kondapur"],["3:30 PM","KBR Park birdwatching"],["5:30 PM","Durgam Cheruvu sunset shoot"],["7:30 PM","Cafe wind-down in Jubilee Hills"]],
+    tips:"Golden hour at Durgam Cheruvu hits around 6 PM — arrive 30 minutes early for the best spot.", food:"Carry your own snacks — lakeside food options are limited.", parking:"Two-wheeler parking is easiest at all three nature stops.", hours:"Osman Sagar sunrise best 6–7 AM · Durgam Cheruvu till 9 PM"},
+  {id:8, title:"Old City Heritage Immersion", cat:"Heritage", emoji:"🏛", moods:["heritage","photography","food"], cost:700, distance:13, mode:["Car"], group:["Solo","Friends"], duration:"10 hrs", rating:4.8, perfect:"Deep-dive history and food explorers",
+    timeline:[["7:00 AM","Taramati Baradari heritage visit"],["9:00 AM","Breakfast near Golconda"],["10:30 AM","Golconda Fort guided walk"],["1:00 PM","Lunch — Old City Hyderabadi cuisine"],["3:00 PM","Qutb Shahi Tombs"],["5:00 PM","Osman Sagar evening breeze"],["7:30 PM","Dinner with Old City flavors"]],
+    tips:"Hire a local guide at Golconda Fort for the best acoustics demonstration story.", food:"Old City lunch spots near Golconda serve some of the city's best biryani.", parking:"Designated lots near both fort and tombs entrances.", hours:"Taramati Baradari 10 AM–6 PM"},
+  {id:9, title:"Mall Hopping Marathon", cat:"Shopping", emoji:"🛍", moods:["shopping","fun","food","cafes"], cost:2000, distance:6, mode:["Car","Metro"], group:["Friends"], duration:"9 hrs", rating:4.3, perfect:"Shopaholics and friend groups",
+    timeline:[["9:00 AM","Breakfast at Hitech City"],["10:30 AM","Inorbit Mall"],["1:00 PM","Lunch at Inorbit food court"],["3:00 PM","Sarath City Capital Mall"],["5:00 PM","GVK One mall finale"],["7:00 PM","Jubilee Hills cafes"],["8:30 PM","Dinner with friends"]],
+    tips:"Use metro between malls on weekends to skip traffic and parking queues.", food:"Each mall has distinct food courts — save dessert for GVK One.", parking:"Metro is faster than driving between all three malls on weekends.", hours:"All malls open 11 AM–10 PM"},
+  {id:10, title:"Family Fun Circuit", cat:"Family & Fun", emoji:"👨‍👩‍👧", moods:["family","fun","food","shopping"], cost:1800, distance:8, mode:["Car"], group:["Family"], duration:"10 hrs", rating:4.5, perfect:"Families with young children",
+    timeline:[["8:00 AM","Breakfast near home base"],["9:30 AM","Botanical Garden play areas"],["12:30 PM","Lunch at Sarath City Mall"],["2:00 PM","Game Palacio arcade for kids"],["4:00 PM","Sky Zone for older kids"],["6:00 PM","Sarath City evening shopping"],["8:00 PM","Family dinner"]],
+    tips:"Botanical Garden's play zones are best visited before the midday heat.", food:"Sarath City food court has kid-friendly counters and high chairs.", parking:"Stroller-friendly parking available at Botanical Garden.", hours:"Botanical Garden 9 AM–6 PM"},
+  {id:11, title:"Sunset Seeker's Loop", cat:"Sunset & Nature", emoji:"🌅", moods:["sunset","nature","cafes","photography"], cost:600, distance:9, mode:["Bike","Walking"], group:["Couple","Solo"], duration:"8 hrs", rating:4.6, perfect:"Couples and solo wanderers",
+    timeline:[["7:30 AM","Breakfast in Madhapur"],["9:00 AM","KBR Park morning walk"],["11:00 AM","Botanical Garden stroll"],["1:00 PM","Lunch near Kondapur"],["3:30 PM","Jubilee Hills cafe break"],["5:30 PM","Durgam Cheruvu cable bridge sunset"],["7:30 PM","Dinner with lake views"]],
+    tips:"The cable bridge at Durgam Cheruvu is the city's best free sunset spot.", food:"Carry a light snack for the cafe break — portions run small.", parking:"Walking between KBR Park and Botanical Garden is easy and scenic.", hours:"KBR Park 5:30–9:30 AM, 4–6:30 PM"},
+  {id:12, title:"Cafe Hopper's Itinerary", cat:"Cafes & Food", emoji:"☕", moods:["cafes","food","fun","photography"], cost:1000, distance:7, mode:["Car","Bike"], group:["Friends","Couple"], duration:"8 hrs", rating:4.4, perfect:"Foodies and cafe enthusiasts",
+    timeline:[["7:00 AM","Light temple stop — Jagannath Temple"],["9:00 AM","Breakfast at a specialty cafe"],["11:00 AM","KBR Park digestion walk"],["1:00 PM","Lunch at a Jubilee Hills bistro"],["3:00 PM","Cafe-hop across Jubilee Hills"],["5:30 PM","GVK One quick browse"],["7:30 PM","Dinner at a themed cafe"]],
+    tips:"Jubilee Hills has the city's highest density of aesthetic cafes — pace yourself.", food:"Order small plates across cafes instead of one big meal each stop.", parking:"Valet available at most premium cafes in Jubilee Hills.", hours:"Most cafes open 8 AM–11 PM"},
+  {id:13, title:"Adventure & Devotion Combo", cat:"Adventure & Devotion", emoji:"🎢", moods:["adventure","devotion","fun","family"], cost:1400, distance:8, mode:["Car"], group:["Family","Friends"], duration:"10 hrs", rating:4.5, perfect:"Groups wanting thrill plus tradition",
+    timeline:[["6:30 AM","Chilkur Balaji Temple darshan"],["8:30 AM","Breakfast near Gandipet"],["10:00 AM","Osman Sagar boating area"],["1:00 PM","Lunch en route back"],["3:00 PM","Sky Zone trampoline session"],["5:30 PM","Game Palacio arcade"],["8:00 PM","Dinner in Hitech City"]],
+    tips:"Chilkur Balaji has no donation box — it's known as the 'visa temple', expect long weekend queues.", food:"Gandipet road has scenic dhabas perfect for a relaxed breakfast.", parking:"Free roadside parking near Osman Sagar.", hours:"Chilkur Temple 5 AM–9 PM, no fixed darshan slots"},
+  {id:14, title:"Craft, Culture & Cuisine", cat:"Heritage & Food", emoji:"🏛", moods:["heritage","food","shopping","photography"], cost:900, distance:5, mode:["Walking","Metro"], group:["Solo","Friends"], duration:"8 hrs", rating:4.6, perfect:"Culture-seekers staying close to Hitech City",
+    timeline:[["7:00 AM","Peddamma Temple quick visit"],["8:30 AM","Breakfast at Shilparamam"],["9:30 AM","Shilparamam crafts & art village"],["1:00 PM","Lunch at Shilparamam food court"],["3:00 PM","Inorbit Mall art exhibits & shopping"],["5:00 PM","Durgam Cheruvu walk"],["7:00 PM","Dinner near Hitech City metro"]],
+    tips:"Shilparamam hosts rotating craft exhibitions — check what's on before you go.", food:"Shilparamam's food court has regional Telangana specialities.", parking:"Metro to Hitech City station is the easiest way in.", hours:"Shilparamam 10:30 AM–7 PM"},
+  {id:15, title:"Financial District Unwind", cat:"Nature & Cafes", emoji:"🌳", moods:["nature","cafes","sunset","fun"], cost:800, distance:6, mode:["Car","Bike"], group:["Couple","Solo"], duration:"7 hrs", rating:4.3, perfect:"Working professionals wanting a short escape",
+    timeline:[["8:00 AM","Breakfast near Financial District"],["9:30 AM","Durgam Cheruvu morning walk"],["11:30 AM","Botanical Garden quiet corners"],["1:30 PM","Lunch at Gachibowli restaurants"],["3:30 PM","Mindspace cafe break"],["5:30 PM","Raidurg sunset point"],["7:30 PM","Dinner near Financial District"]],
+    tips:"This loop is compact enough to do after a half-day off work.", food:"Gachibowli has some of the best multi-cuisine options in the corridor.", parking:"Office-hour traffic is light on weekends — best time to visit.", hours:"Durgam Cheruvu Park 6 AM–9 PM"},
 ];
 
-/* ===================== START BUTTON LOGIC ===================== */
-document.getElementById('startBtn').addEventListener('click', ()=>{
-  const moodeSection = document.getElementById('moods');
-  moodeSection.scrollIntoView({behavior:'smooth'});
-});
-
-/* ===================== RENDER CATEGORY CARDS ===================== */
-const catGrid = document.getElementById('catGrid');
+/* ===================== STATE ===================== */
 let activeMoods = new Set();
+let filters = {distance:null, mode:null, group:null, budget:null};
+let favorites = new Set();
+let searchTerm = '';
+let sortMode = 'default';
+let favOnly = false;
+let visibleCount = 9;
 
-moods.forEach(m=>{
-  const card = document.createElement('button');
-  card.className = 'cat-card';
-  card.setAttribute('aria-pressed','false');
-  card.innerHTML = `<span class="glyph">${m.icon}</span><span class="label">${m.label}</span>`;
-  card.addEventListener('click', ()=>{
-    if(activeMoods.has(m.key)){
-      activeMoods.delete(m.key);
-      card.classList.remove('active');
-      card.setAttribute('aria-pressed','false');
-    } else {
-      activeMoods.add(m.key);
-      card.classList.add('active');
-      card.setAttribute('aria-pressed','true');
-    }
-    updateResults();
-  });
-  catGrid.appendChild(card);
+/* ===================== LOADER ===================== */
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{ document.getElementById('loader').classList.add('hide'); }, 700);
 });
 
-/* ===================== RENDER PLAN CARDS ===================== */
-const plansGrid = document.getElementById('plansGrid');
-const matchBanner = document.getElementById('matchBanner');
-const matchTitle = document.getElementById('matchTitle');
-const matchSub = document.getElementById('matchSub');
-const catHint = document.getElementById('catHint');
+/* ===================== PEARL FIELD ===================== */
+const pearlField = document.getElementById('pearlField');
+for(let i=0;i<22;i++){
+  const p = document.createElement('div');
+  p.className='pearl';
+  const size = 4 + Math.random()*8;
+  p.style.width = size+'px'; p.style.height = size+'px';
+  p.style.left = Math.random()*100+'%';
+  p.style.top = Math.random()*100+'%';
+  p.style.animationDelay = (Math.random()*5)+'s';
+  p.style.animationDuration = (7+Math.random()*6)+'s';
+  pearlField.appendChild(p);
+}
+const skyline = document.getElementById('skyline');
+for(let i=0;i<13;i++){
+  const m = document.createElement('div');
+  m.className='minar';
+  m.style.height = (40+Math.random()*80)+'px';
+  skyline.appendChild(m);
+}
 
-function scoreOf(plan){
-  if(activeMoods.size===0) return 0;
-  let s=0;
-  plan.moods.forEach(m=>{ if(activeMoods.has(m)) s++; });
-  return s;
+/* ===================== NAV ===================== */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', ()=>{
+  nav.classList.toggle('scrolled', window.scrollY>40);
+  document.getElementById('backTop').classList.toggle('show', window.scrollY>600);
+});
+document.getElementById('navToggle').addEventListener('click', ()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click', ()=>{
+  document.getElementById('navLinks').classList.remove('open');
+}));
+
+/* ===================== MOODS RENDER ===================== */
+const moodGrid = document.getElementById('moodGrid');
+MOODS.forEach(m=>{
+  const card = document.createElement('div');
+  card.className='mood-card';
+  card.dataset.id = m.id;
+  card.innerHTML = `<span class="emoji">${m.emoji}</span><span class="label">${m.label}</span>`;
+  card.addEventListener('click', ()=>{
+    if(activeMoods.has(m.id)) activeMoods.delete(m.id); else activeMoods.add(m.id);
+    card.classList.toggle('active');
+    renderPlans();
+    showToast(activeMoods.has(m.id) ? `${m.label} mood added` : `${m.label} mood removed`);
+  });
+  moodGrid.appendChild(card);
+});
+
+/* ===================== FILTER CHIPS ===================== */
+document.querySelectorAll('.filter-chip-row').forEach(row=>{
+  const group = row.dataset.group;
+  row.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const val = chip.dataset.value;
+      if(filters[group]===val){ filters[group]=null; chip.classList.remove('active'); }
+      else{
+        row.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        filters[group]=val; chip.classList.add('active');
+      }
+      renderPlans();
+    });
+  });
+});
+document.getElementById('clearFiltersBtn').addEventListener('click', ()=>{
+  filters = {distance:null, mode:null, group:null, budget:null};
+  activeMoods.clear(); favOnly=false; searchTerm=''; document.getElementById('searchInput').value='';
+  document.querySelectorAll('.chip.active, .mood-card.active').forEach(el=>el.classList.remove('active'));
+  document.getElementById('favOnlyBtn').classList.remove('active');
+  renderPlans();
+  showToast('All filters cleared');
+});
+document.getElementById('favOnlyBtn').addEventListener('click', function(){
+  favOnly = !favOnly; this.classList.toggle('active');
+  renderPlans();
+});
+document.getElementById('searchInput').addEventListener('input', e=>{
+  searchTerm = e.target.value.toLowerCase(); renderPlans();
+});
+document.getElementById('sortSelect').addEventListener('change', e=>{
+  sortMode = e.target.value; renderPlans();
+});
+document.getElementById('loadMoreBtn').addEventListener('click', ()=>{
+  visibleCount += 6; renderPlans();
+});
+
+/* ===================== PLAN RENDER ===================== */
+const planGrid = document.getElementById('planGrid');
+
+function getFilteredPlans(){
+  let list = PLANS.filter(p=>{
+    if(filters.distance && p.distance > parseInt(filters.distance)) return false;
+    if(filters.mode && !p.mode.includes(filters.mode)) return false;
+    if(filters.group && !p.group.includes(filters.group)) return false;
+    if(filters.budget){
+      if(filters.budget==='Free' && p.cost!==0) return false;
+      if(filters.budget==='500' && !(p.cost<=500)) return false;
+      if(filters.budget==='1000' && !(p.cost>500 && p.cost<=1000)) return false;
+      if(filters.budget==='2000' && !(p.cost>1000)) return false;
+    }
+    if(favOnly && !favorites.has(p.id)) return false;
+    if(searchTerm && !(p.title.toLowerCase().includes(searchTerm) || p.cat.toLowerCase().includes(searchTerm))) return false;
+    return true;
+  });
+
+  if(activeMoods.size>0){
+    list = list.slice().sort((a,b)=>{
+      const aScore = a.moods.filter(m=>activeMoods.has(m)).length;
+      const bScore = b.moods.filter(m=>activeMoods.has(m)).length;
+      return bScore - aScore;
+    });
+  }
+
+  switch(sortMode){
+    case 'distance': list = list.slice().sort((a,b)=>a.distance-b.distance); break;
+    case 'popularity': list = list.slice().sort((a,b)=>b.rating-a.rating); break;
+    case 'budget': list = list.slice().sort((a,b)=>a.cost-b.cost); break;
+    case 'duration': list = list.slice().sort((a,b)=>parseInt(a.duration)-parseInt(b.duration)); break;
+    case 'nearest': list = list.slice().sort((a,b)=>a.distance-b.distance); break;
+  }
+  return list;
 }
 
 function renderPlans(){
-  plansGrid.innerHTML = '';
-  const scored = plans.map(p=>({...p, score:scoreOf(p)}));
-  const hasFilter = activeMoods.size>0;
-  scored.sort((a,b)=> b.score - a.score);
-
-  scored.forEach((p,idx)=>{
-    const isTop = hasFilter && idx===0 && p.score>0;
-    const card = document.createElement('article');
-    card.className = 'plan-card';
-    card.style.order = idx;
-    const liList = p.stops.slice(0,4).map(s=>`<li>${s.place}</li>`).join('');
+  const list = getFilteredPlans();
+  planGrid.innerHTML = '';
+  const shown = list.slice(0, visibleCount);
+  shown.forEach((p,i)=>{
+    const card = document.createElement('div');
+    card.className='plan-card';
+    const dots = p.timeline.map((_,idx)=> idx<p.timeline.length-1 ? `<span class="dot"></span><span class="line"></span>` : `<span class="dot"></span>`).join('');
     card.innerHTML = `
-      <div class="top">
-        <div>
-          <span class="tag">${p.tag}</span>
-          <h3>${p.title}</h3>
-        </div>
-        ${isTop ? '<span class="best">Top Match</span>' : ''}
+      <div class="plan-banner">
+        <span class="cat-emoji">${p.emoji}</span>
+        <button class="fav-btn ${favorites.has(p.id)?'active':''}" data-id="${p.id}">♥</button>
+        <div class="rating-badge">★ ${p.rating}</div>
       </div>
-      <div class="stops"><ul>${liList}</ul></div>
-      <div class="perfect">Perfect for: ${p.perfect}</div>
-      <button class="open-btn">View Itinerary →</button>
+      <div class="plan-body">
+        <div class="plan-cat">${p.cat}</div>
+        <div class="plan-title">${p.title}</div>
+        <div class="plan-meta">
+          <span>💰 ₹${p.cost}</span>
+          <span>📍 ${p.distance} km</span>
+          <span>⏱ ${p.duration}</span>
+          <span>🌤 Morning start</span>
+        </div>
+        <div class="mini-timeline">${dots}</div>
+        <div class="plan-perfect"><b>Perfect for:</b> ${p.perfect}</div>
+      </div>
+      <div class="plan-actions">
+        <button class="btn-view" data-id="${p.id}">View Details</button>
+        <button class="btn-route" data-id="${p.id}">Open Route</button>
+      </div>
     `;
-    card.querySelector('.open-btn').addEventListener('click', ()=> openModal(p));
-    card.addEventListener('click', (e)=>{ if(e.target.tagName!=='BUTTON') openModal(p); });
-    plansGrid.appendChild(card);
+    planGrid.appendChild(card);
+    requestAnimationFrame(()=>setTimeout(()=>card.classList.add('show'), i*60));
   });
 
-  if(hasFilter){
-    const top = scored[0];
-    if(top.score>0){
-      matchBanner.classList.add('show');
-      matchTitle.textContent = top.title;
-      matchSub.textContent = "Matches " + top.score + " of your selected moods — " + top.perfect;
-    } else {
-      matchBanner.classList.remove('show');
-    }
-    const labels = [...activeMoods].map(k=> moods.find(m=>m.key===k).label).join(' + ');
-    catHint.innerHTML = `Showing plans for <strong>${labels}</strong>`;
-  } else {
-    matchBanner.classList.remove('show');
-    catHint.textContent = "Tap a mood above to see your best-matched plan.";
-  }
-}
+  document.getElementById('loadMoreBtn').style.display = visibleCount>=list.length ? 'none':'inline-block';
 
-function updateResults(){ renderPlans(); }
-renderPlans();
+  planGrid.querySelectorAll('.fav-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.id);
+      if(favorites.has(id)){ favorites.delete(id); btn.classList.remove('active'); showToast('Removed from favorites'); }
+      else{ favorites.add(id); btn.classList.add('active'); showToast('Added to favorites ♥'); }
+      if(favOnly) renderPlans();
+    });
+  });
+  planGrid.querySelectorAll('.btn-view').forEach(btn=>{
+    btn.addEventListener('click', ()=>openModal(parseInt(btn.dataset.id)));
+  });
+  planGrid.querySelectorAll('.btn-route').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const p = PLANS.find(pl=>pl.id===parseInt(btn.dataset.id));
+      window.open(`https://www.google.com/maps/dir/Hitech+City,+Hyderabad/${encodeURIComponent(p.title)}`, '_blank');
+    });
+  });
+}
 
 /* ===================== MODAL ===================== */
-const modalOverlay = document.getElementById('modalOverlay');
-const modalBody = document.getElementById('modalBody');
+const overlay = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
 
-function openModal(plan){
-  const items = plan.stops.map((s,i)=>`
-    <div class="t-item" style="animation-delay:${i*0.12}s">
-      <div class="t-dot"></div>
-      <div class="t-body">
-        <div class="time">${s.time}</div>
-        <div class="place">${s.place}</div>
-        <div class="desc">${s.desc}</div>
-        <div class="extra">${s.dist} · ${s.hours}</div>
+function openModal(id){
+  const p = PLANS.find(pl=>pl.id===id);
+  const timelineHtml = p.timeline.map((t,i)=>`
+    <div class="t-item" style="animation-delay:${i*0.08}s">
+      <div class="t-time">${t[0]}</div>
+      <div class="t-name">${t[1]}</div>
+    </div>`).join('');
+
+  modalContent.innerHTML = `
+    <div class="modal-header">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-cat">${p.cat}</div>
+      <h3>${p.emoji} ${p.title}</h3>
+    </div>
+    <div class="modal-body">
+      <div class="modal-stats">
+        <div class="modal-stat"><div class="v">${p.distance} km</div><div class="l">Distance</div></div>
+        <div class="modal-stat"><div class="v">₹${p.cost}</div><div class="l">Approx Cost</div></div>
+        <div class="modal-stat"><div class="v">${p.duration}</div><div class="l">Duration</div></div>
+        <div class="modal-stat"><div class="v">★ ${p.rating}</div><div class="l">Rating</div></div>
+      </div>
+      <div class="modal-section">
+        <h4>Complete Timeline</h4>
+        <div class="timeline">${timelineHtml}</div>
+      </div>
+      <div class="modal-section"><h4>Opening Hours</h4><p>${p.hours}</p></div>
+      <div class="modal-section"><h4>Travel Tips</h4><p>${p.tips}</p></div>
+      <div class="modal-section"><h4>Food Recommendation</h4><p>${p.food}</p></div>
+      <div class="modal-section"><h4>Parking</h4><p>${p.parking}</p></div>
+      <div class="modal-section"><h4>Nearby Attractions</h4><p>${p.timeline.map(t=>t[1].split(' — ')[0]).join(' · ')}</p></div>
+      <div class="modal-actions">
+        <button class="ma-maps" id="maMaps">🗺 Open Maps</button>
+        <button class="ma-share" id="maShare">🔗 Share</button>
+        <button class="ma-print" id="maPrint">🖨 Print</button>
+        <button class="ma-download" id="maDownload">⬇ Download</button>
+        <button class="ma-copy" id="maCopy">📋 Copy</button>
       </div>
     </div>
-  `).join('');
-
-  modalBody.innerHTML = `
-    <div class="modal-head">
-      <button class="close" aria-label="Close itinerary">✕</button>
-      <span class="tag">${plan.tag}</span>
-      <h3>${plan.title}</h3>
-      <p>${plan.perfect}</p>
-    </div>
-    <div class="timeline">${items}</div>
-    <div class="modal-foot">
-      <button class="btn btn-gold close">Close</button>
-    </div>
   `;
-  modalOverlay.classList.add('show');
-  modalBody.querySelectorAll('.close').forEach(b=> b.addEventListener('click', closeModal));
-  document.body.style.overflow='hidden';
-}
-
-function closeModal(){
-  modalOverlay.classList.remove('show');
-  document.body.style.overflow='';
-}
-
-modalOverlay.addEventListener('click', (e)=>{ if(e.target===modalOverlay) closeModal(); });
-document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
-
-/* ===================== SCROLL REVEAL ===================== */
-const revealEls = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(en=>{
-    if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+  overlay.classList.add('open');
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('maMaps').addEventListener('click', ()=>{
+    window.open(`https://www.google.com/maps/dir/Hitech+City,+Hyderabad/${encodeURIComponent(p.title)}`, '_blank');
   });
-}, {threshold:0.15});
-revealEls.forEach(el=> io.observe(el));
+  document.getElementById('maShare').addEventListener('click', ()=>{
+    const text = `Check out "${p.title}" — a ${p.duration} Hyderabad itinerary from Hitech City! ${p.timeline.map(t=>t[1]).join(' → ')}`;
+    if(navigator.share){ navigator.share({title:p.title, text}); } else { navigator.clipboard.writeText(text); showToast('Itinerary copied for sharing'); }
+  });
+  document.getElementById('maPrint').addEventListener('click', ()=> window.print());
+  document.getElementById('maDownload').addEventListener('click', ()=>{
+    const text = `${p.title}\n${p.cat}\n\n${p.timeline.map(t=>`${t[0]} - ${t[1]}`).join('\n')}\n\nTips: ${p.tips}\nFood: ${p.food}\nParking: ${p.parking}`;
+    const blob = new Blob([text], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${p.title.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    showToast('Itinerary downloaded');
+  });
+  document.getElementById('maCopy').addEventListener('click', ()=>{
+    const text = `${p.title}\n${p.timeline.map(t=>`${t[0]} - ${t[1]}`).join('\n')}`;
+    navigator.clipboard.writeText(text);
+    showToast('Itinerary copied to clipboard');
+  });
+}
+function closeModal(){ overlay.classList.remove('open'); }
+overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ===================== TOAST ===================== */
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ===================== COUNTERS (animated on view) ===================== */
+const counterObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      document.querySelectorAll('.counter .num').forEach(el=>{
+        const target = parseInt(el.dataset.target);
+        let cur = 0;
+        const step = Math.max(1, Math.ceil(target/40));
+        const tick = ()=>{
+          cur += step;
+          if(cur>=target){ el.textContent = target; return; }
+          el.textContent = cur;
+          requestAnimationFrame(tick);
+        };
+        tick();
+      });
+      counterObserver.disconnect();
+    }
+  });
+}, {threshold:0.4});
+counterObserver.observe(document.getElementById('counters'));
+
+/* ===================== FAB & BACK TO TOP ===================== */
+document.getElementById('fab').addEventListener('click', ()=>{
+  document.getElementById('plans').scrollIntoView({behavior:'smooth'});
+  showToast('Jumped to plans');
+});
+document.getElementById('backTop').addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ===================== INIT ===================== */
+renderPlans();
 </script>
 </body>
 </html>
